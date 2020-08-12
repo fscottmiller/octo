@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/windows/servercore:1809 AS installer
+FROM mcr.microsoft.com/powershell:lts-nanoserver-1809 AS installer
 
 SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
 ARG OCTO_TOOLS_VERSION=4.31.1
