@@ -1,7 +1,8 @@
 FROM mcr.microsoft.com/dotnet/core/runtime:2.1-nanoserver-1809
 # MAINTAINER robert.erez devops@octopus.com
-# comment to trigger workflow
 ARG OCTO_TOOLS_VERSION=4.31.1
+# use powershell not batch
+SHELL ["powershell", "-Command"]
 
 LABEL maintainer="devops@octopus.com" \ 
 	octopus.dockerfile.version="1.0" \
