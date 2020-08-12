@@ -13,14 +13,11 @@ jobs:
     runs-on: windows-latest
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Build and push Docker images
-      uses: docker/build-push-action@v1
-      with:
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
-        repository: fscottmiller/octo
-        tags: latest,nanoserver-1809,1809
-    #- name: Build the Docker image
-    #  run: docker build . --file Dockerfile --tag fscottmiller/octo:$(date +%s)
+    - name: Checkout Repo
+      uses: actions/checkout@v2
+    - name: Build and Push
+      run: |
+        docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+        docker build . --file Dockerfile --tag fscottmiller/octo:$(date +%s)
+        docker push fscottmiller/octo:$(date +%s)
       
