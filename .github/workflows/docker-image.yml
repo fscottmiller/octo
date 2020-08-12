@@ -17,7 +17,8 @@ jobs:
       uses: actions/checkout@v2
     - name: Build and Push
       run: |
+        set VERSION=$(date +%s)
         docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-        docker build . --file Dockerfile --tag fscottmiller/octo:$(date +%s)
-        docker push fscottmiller/octo:$(date +%s)
+        docker build . --file Dockerfile --tag fscottmiller/octo:%VERSION%
+        docker push fscottmiller/octo:%VERSION%
       
