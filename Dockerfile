@@ -7,7 +7,7 @@ ENV OCTO_TOOLS_DOWNLOAD_URL https://download.octopusdeploy.com/octopus-tools/$OC
 
 # Update system path
 USER ContainerAdministrator
-RUN $Env:Path += ";C:\Program Files\octo"
+RUN setx path "%path%;C:\Program Files\octo"
 USER ${user}
 
 # use powershell
