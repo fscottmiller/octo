@@ -13,7 +13,7 @@ RUN Invoke-WebRequest $Env:OCTO_TOOLS_DOWNLOAD_URL -OutFile OctopusTools.zip; \
 FROM mcr.microsoft.com/dotnet/core/runtime:2.1-nanoserver-1809 
 
 RUN mkdir src
-COPY --from=downloader /octo
+COPY --from=downloader /octo .
 
 WORKDIR /src
 
