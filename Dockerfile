@@ -13,6 +13,6 @@ RUN Invoke-WebRequest $Env:OCTO_TOOLS_DOWNLOAD_URL -OutFile OctopusTools.zip; \
 	
 # In order to set system PATH, ContainerAdministrator must be used
 USER ContainerAdministrator
-RUN setx /M PATH "%PATH%;C:\Program Files\octo"
+RUN $Env:Path += ";C:\Program Files\octo"
 USER ${user}
 
