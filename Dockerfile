@@ -1,4 +1,4 @@
-FROM jenkins/inbound-agent:windowsservercore:1809
+FROM jenkins/inbound-agent:windowsservercore-1809
 
 SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
 ARG OCTO_TOOLS_VERSION=4.31.1
