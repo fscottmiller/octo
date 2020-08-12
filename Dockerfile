@@ -11,7 +11,7 @@ RUN Invoke-WebRequest $Env:OCTO_TOOLS_DOWNLOAD_URL -OutFile OctopusTools.zip; \
 	mkdir src |Out-Null
 	
 # Runtime Image
-FROM mcr.microsoft.com/dotnet/core/runtime2.1-nanoserver-1809 
+FROM mcr.microsoft.com/dotnet/core/runtime:2.1-nanoserver-1809 
 
 # In order to set system PATH, ContainerAdministrator must be used
 USER ContainerAdministrator
