@@ -13,9 +13,11 @@ RUN Invoke-WebRequest $Env:OCTO_TOOLS_DOWNLOAD_URL -OutFile OctopusTools.zip; \
 # Runtime Image
 FROM mcr.microsoft.com/dotnet/core/runtime2.1-nanoserver-1809 
 
-RUN mkdir /src
-WORKDIR /src
+# In order to set system PATH, ContainerAdministrator must be used
+USER ContainerAdministrator
+RUN setx /M PATH "%PATH%;C:\Program Files\octo"
+USER ContainerUser
 
-COPY --from=installer ["/octo", "."]
+COPY --from=installer ["/octo", "/Program Files/octo"]
 
-ENTRYPOINT ["dotnet", "./octo/Octo.dll"]
+ENTRYPOINT ["dotnet", "/Program Files/octo/Octo.dll"]
