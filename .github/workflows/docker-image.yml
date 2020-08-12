@@ -1,10 +1,6 @@
 name: Docker Image CI
 
-on:
-  push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+on: push
 
 jobs:
 
@@ -18,6 +14,13 @@ jobs:
     - name: Build and Push
       run: |
         docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-        docker build . --file Dockerfile --tag fscottmiller/octo:${{ github.sha }}
-        docker push fscottmiller/octo:${{ github.sha }}
+        docker build . --file Dockerfile --tag fscottmiller/octo
+        docker tag fscottmiller/octo:${{ github.sha }}
+        docker tag fscottmiller/octo:${GITHUB_REF##*/}-latest       
+    - name: Production Tag
+      if: github.ref == 'refs/heads/master'
+      run: |
+        docker tag fscottmiller/octo:latest
+    - name: Push
+      run: docker push fscottmiller/octo
       
