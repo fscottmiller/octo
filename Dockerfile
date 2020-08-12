@@ -1,7 +1,7 @@
 FROM mcr.microsoft.com/powershell:lts-nanoserver-1809 AS downloader
 
 ARG OCTO_TOOLS_VERSION=4.31.1
-SHELL ["powershell", "-Command"]
+# SHELL ["powershell", "-Command"]
 
 ENV OCTO_TOOLS_DOWNLOAD_URL https://download.octopusdeploy.com/octopus-tools/$OCTO_TOOLS_VERSION/OctopusTools.$OCTO_TOOLS_VERSION.portable.zip
 
