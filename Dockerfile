@@ -10,13 +10,10 @@ LABEL maintainer="devops@octopus.com" \
 
 ENV OCTO_TOOLS_DOWNLOAD_URL https://download.octopusdeploy.com/octopus-tools/$OCTO_TOOLS_VERSION/OctopusTools.$OCTO_TOOLS_VERSION.portable.zip
 
-RUN Invoke-WebRequest $Env:OCTO_TOOLS_DOWNLOAD_URL -OutFile OctopusTools.zip; \
-"A"; \
-Expand-Archive OctopusTools.zip -DestinationPath octo; \
-"B"; \
-Remove-Item -Force OctopusTools.zip; \
-"C"; \
-mkdir src |Out-Null
+RUN Invoke-WebRequest $Env:OCTO_TOOLS_DOWNLOAD_URL -OutFile OctopusTools.zip; 
+RUN Expand-Archive OctopusTools.zip -DestinationPath octo; 
+RUN Remove-Item -Force OctopusTools.zip
+RUN mkdir src |Out-Null
 
 WORKDIR /src
 ENTRYPOINT ["dotnet", "/octo/Octo.dll"]
