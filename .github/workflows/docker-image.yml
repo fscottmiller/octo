@@ -16,11 +16,12 @@ jobs:
         docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
         docker build . --file Dockerfile --tag fscottmiller/octo
         docker tag fscottmiller/octo fscottmiller/octo:${{ github.sha }}
-        docker tag fscottmiller/octo fscottmiller/octo:${GITHUB_REF##*/}-latest       
+        docker tag fscottmiller/octo fscottmiller/octo:dev-latest       
     - name: Production Tag
       if: github.ref == 'refs/heads/master'
       run: |
         docker tag fscottmiller/octo fscottmiller/octo:latest
+        docker tag fscottmiller/octo fscottmiller/octo:1809
     - name: Push
       run: docker push fscottmiller/octo
       
