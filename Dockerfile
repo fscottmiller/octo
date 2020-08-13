@@ -7,7 +7,8 @@ ARG user=jenkins
 SHELL ["cmd", "/S", "/C"] 
 # Update system path
 USER ContainerAdministrator
-RUN $ENV:PATH="$ENV:PATH;C:\Program Files\octo"
+RUN setx path "%path%;C:\Program Files\octo"
+# RUN $ENV:PATH="$ENV:PATH;C:\Program Files\octo"
 USER ${user}
 
 # use powershell for rest of build
