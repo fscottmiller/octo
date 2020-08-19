@@ -1,24 +1,15 @@
-FROM jenkins/inbound-agent:windowsservercore-1809
-
+FROM mcr.microsoft.com/dotnet/core/runtime:2.1
 ARG OCTO_TOOLS_VERSION=4.31.1
-ARG user=jenkins
 
-# use cmd to set path
-SHELL ["cmd", "/S", "/C"] 
-# Update system path
-USER ContainerAdministrator
-RUN setx path "%path%;C:\Program Files\octo"
-# RUN $ENV:PATH="$ENV:PATH;C:\Program Files\octo"
-USER ${user}
+LABEL maintainer="devops@octopus.com" 
+LABEL octopus.dockerfile.version="1.0"
+LABEL octopus.tools.version=$OCTO_TOOLS_VERSION 
 
-# use powershell for rest of build
-SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
+COPY OctopusTools.$OCTO_TOOLS_VERSION.portable.zip ./octo/OctopusTools.zip
 
-ENV OCTO_TOOLS_DOWNLOAD_URL https://download.octopusdeploy.com/octopus-tools/$OCTO_TOOLS_VERSION/OctopusTools.$OCTO_TOOLS_VERSION.portable.zip
-
-# Retrieve Octopus CLI
-RUN Invoke-WebRequest $Env:OCTO_TOOLS_DOWNLOAD_URL -OutFile OctopusTools.zip; \
-	Expand-Archive OctopusTools.zip -DestinationPath octo; \
-	Remove-Item -Force OctopusTools.zip; \
+RUN Expand-Archive ./octo/OctopusTools.zip -DestinationPath octo; \
+	Remove-Item -Force ./octo/OctopusTools.zip; \
 	mkdir src |Out-Null
-	
+
+WORKDIR /src
+ENTRYPOINT ["dotnet", "/octo/octo.dll"]
